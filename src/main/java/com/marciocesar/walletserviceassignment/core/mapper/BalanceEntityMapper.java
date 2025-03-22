@@ -1,7 +1,7 @@
 package com.marciocesar.walletserviceassignment.core.mapper;
 
-import com.marciocesar.walletserviceassignment.api.controllers.request.CreateWalletRequest;
-import com.marciocesar.walletserviceassignment.core.dtos.CreateWalletRequestDTO;
+import com.marciocesar.walletserviceassignment.core.database.entities.BalanceEntity;
+import com.marciocesar.walletserviceassignment.core.dtos.BalanceDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -10,5 +10,5 @@ public interface BalanceEntityMapper {
 
     BalanceEntityMapper BALANCE_ENTITY_MAPPER = Mappers.getMapper(BalanceEntityMapper.class);
 
-    CreateWalletRequestDTO toDTO(CreateWalletRequest createWalletRequest);
+    BalanceDTO toDTO(BalanceEntity balanceEntity);
 }
