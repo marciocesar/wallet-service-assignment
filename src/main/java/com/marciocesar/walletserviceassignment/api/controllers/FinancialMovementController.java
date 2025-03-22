@@ -4,14 +4,14 @@ import com.marciocesar.walletserviceassignment.api.controllers.request.DepositBa
 import com.marciocesar.walletserviceassignment.api.controllers.request.TransferBalanceRequest;
 import com.marciocesar.walletserviceassignment.api.controllers.request.WithdrawalBalanceRequest;
 import com.marciocesar.walletserviceassignment.api.controllers.response.BalanceResponse;
-import com.marciocesar.walletserviceassignment.core.dtos.FinancialMovementDTO;
-import com.marciocesar.walletserviceassignment.core.interfaces.WalletFinancialMovement;
 import com.marciocesar.walletserviceassignment.core.services.WalletFinancialMovementService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import static com.marciocesar.walletserviceassignment.api.mapper.BalanceResponseMapper.BALANCE_RESPONSE_MAPPER;
+import static com.marciocesar.walletserviceassignment.core.interfaces.WalletFinancialMovement.Type.*;
+import static com.marciocesar.walletserviceassignment.core.mapper.FinancialMovementDTOMapper.FINANCIAL_MOVEMENT_DTO_MAPPER;
 
 @RestController
 @RequestMapping("/wallets/balances")
@@ -24,12 +24,8 @@ public class FinancialMovementController {
     @ResponseStatus(value = HttpStatus.OK)
     public BalanceResponse deposit(@RequestBody DepositBalanceRequest request) {
 
-        final var balanceDTO = walletFinancialMovementService.executeFinancialMovement(FinancialMovementDTO.builder()
-                .walletExternalCode(request.walletExternalCode())
-                .customerExternalCode(request.customerExternalCode())
-                .amount(request.amount())
-                .type(WalletFinancialMovement.Type.DEPOSIT)
-                .build()
+        final var balanceDTO = walletFinancialMovementService.executeFinancialMovement(
+                FINANCIAL_MOVEMENT_DTO_MAPPER.toDTO(request, DEPOSIT)
         );
 
         return BALANCE_RESPONSE_MAPPER.toResponse(balanceDTO);
@@ -39,12 +35,8 @@ public class FinancialMovementController {
     @ResponseStatus(value = HttpStatus.OK)
     public BalanceResponse deposit(@RequestBody WithdrawalBalanceRequest request) {
 
-        final var balanceDTO = walletFinancialMovementService.executeFinancialMovement(FinancialMovementDTO.builder()
-                .walletExternalCode(request.walletExternalCode())
-                .customerExternalCode(request.customerExternalCode())
-                .amount(request.amount())
-                .type(WalletFinancialMovement.Type.WITHDRAWAL)
-                .build()
+        final var balanceDTO = walletFinancialMovementService.executeFinancialMovement(
+                FINANCIAL_MOVEMENT_DTO_MAPPER.toDTO(request, WITHDRAWAL)
         );
 
         return BALANCE_RESPONSE_MAPPER.toResponse(balanceDTO);
@@ -54,14 +46,8 @@ public class FinancialMovementController {
     @ResponseStatus(value = HttpStatus.OK)
     public BalanceResponse transfer(@RequestBody TransferBalanceRequest request) {
 
-        final var balanceDTO = walletFinancialMovementService.executeFinancialMovement(FinancialMovementDTO.builder()
-                .walletExternalCode(request.walletExternalCode())
-                .customerExternalCode(request.customerExternalCode())
-                .thirdCustomerExternalCode(request.thirdCustomerExternalCode())
-                .thirdWalletExternalCode(request.thirdWalletExternalCode())
-                .amount(request.amount())
-                .type(WalletFinancialMovement.Type.TRANSFERENCE)
-                .build()
+        final var balanceDTO = walletFinancialMovementService.executeFinancialMovement(
+                FINANCIAL_MOVEMENT_DTO_MAPPER.toDTO(request, TRANSFERENCE)
         );
 
         return BALANCE_RESPONSE_MAPPER.toResponse(balanceDTO);

@@ -12,7 +12,6 @@ public record FinancialMovementDTO(
         UUID walletExternalCode,
         BigDecimal amount,
         WalletFinancialMovement.Type type,
-
         UUID thirdCustomerExternalCode,
         UUID thirdWalletExternalCode
 ) {

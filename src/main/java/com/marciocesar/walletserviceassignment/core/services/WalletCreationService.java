@@ -6,7 +6,7 @@ import com.marciocesar.walletserviceassignment.core.database.entities.WalletEnti
 import com.marciocesar.walletserviceassignment.core.database.repositories.BalanceRepository;
 import com.marciocesar.walletserviceassignment.core.database.repositories.CustomerRepository;
 import com.marciocesar.walletserviceassignment.core.database.repositories.WalletRepository;
-import com.marciocesar.walletserviceassignment.core.dtos.CreateWalletRequestDTO;
+import com.marciocesar.walletserviceassignment.core.dtos.CreateWalletDTO;
 import com.marciocesar.walletserviceassignment.core.dtos.WalletDTO;
 import com.marciocesar.walletserviceassignment.core.exceptions.CustomerNotFoundException;
 import lombok.AllArgsConstructor;
@@ -28,9 +28,9 @@ public class WalletCreationService {
     private BalanceRepository balanceRepository;
     private CustomerRepository customerRepository;
 
-    public WalletDTO create(CreateWalletRequestDTO createWalletRequestDTO) {
+    public WalletDTO create(CreateWalletDTO createWalletDTO) {
 
-        final var customerEntity = customerRepository.findByCustomerExternalCode(createWalletRequestDTO.customerExternalCode())
+        final var customerEntity = customerRepository.findByCustomerExternalCode(createWalletDTO.customerExternalCode())
                 .orElseThrow(CustomerNotFoundException::new);
 
         if (nonNull(customerEntity.getWallet())) {
