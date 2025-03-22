@@ -1,4 +1,4 @@
-package com.marciocesar.walletserviceassignment.core.dtos;
+package com.marciocesar.walletserviceassignment.api.controllers.response;
 
 import lombok.Builder;
 

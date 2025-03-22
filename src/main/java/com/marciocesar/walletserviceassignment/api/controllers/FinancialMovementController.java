@@ -25,8 +25,8 @@ public class FinancialMovementController {
     public BalanceResponse deposit(@RequestBody DepositBalanceRequest request) {
 
         final var balanceDTO = walletFinancialMovementService.executeFinancialMovement(FinancialMovementDTO.builder()
-                .encryptedWalletId(request.encryptedWalletId())
-                .customerExternalCode(request.customerCode())
+                .thirdWalletExternalCode(request.walletExternalCode())
+                .customerExternalCode(request.externalCustomerCode())
                 .amount(request.amount())
                 .type(WalletFinancialMovement.Type.DEPOSIT)
                 .build()
@@ -40,8 +40,8 @@ public class FinancialMovementController {
     public BalanceResponse deposit(@RequestBody WithdrawalBalanceRequest request) {
 
         final var balanceDTO = walletFinancialMovementService.executeFinancialMovement(FinancialMovementDTO.builder()
-                .encryptedWalletId(request.encryptedWalletId())
-                .customerExternalCode(request.customerCode())
+                .walletExternalCode(request.walletExternalCode())
+                .customerExternalCode(request.externalCustomerCode())
                 .amount(request.amount())
                 .type(WalletFinancialMovement.Type.WITHDRAWAL)
                 .build()
@@ -55,10 +55,10 @@ public class FinancialMovementController {
     public BalanceResponse transfer(@RequestBody TransferBalanceRequest request) {
 
         final var balanceDTO = walletFinancialMovementService.executeFinancialMovement(FinancialMovementDTO.builder()
-                .encryptedWalletId(request.encryptedWalletId())
-                .customerExternalCode(request.customerCode())
-                .thirdCustomerExternalCode(request.thirdCustomerCode())
-                .thirdEncryptedWalletId(request.thirdEncryptedWalletId())
+                .walletExternalCode(request.walletExternalCode())
+                .customerExternalCode(request.externalCustomerCode())
+                .thirdCustomerExternalCode(request.thirdCustomerExternalCode())
+                .thirdWalletExternalCode(request.thirdWalletExternalCode())
                 .amount(request.amount())
                 .type(WalletFinancialMovement.Type.TRANSFERENCE)
                 .build()

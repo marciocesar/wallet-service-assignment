@@ -5,8 +5,9 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public interface BalanceRepository extends CrudRepository<BalanceEntity, Long> {
-    Optional<BalanceEntity> findByWalletId(Long walletId);
+    Optional<BalanceEntity> findByWalletwalletExternalCode(UUID walletExternalCode);
 }

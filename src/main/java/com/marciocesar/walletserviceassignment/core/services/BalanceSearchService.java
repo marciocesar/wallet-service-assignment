@@ -8,16 +8,17 @@ import com.marciocesar.walletserviceassignment.core.mapper.BalanceEntityMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @AllArgsConstructor
 public class BalanceSearchService {
 
-    //todo implementar CryptographyService
     private BalanceRepository balanceRepository;
 
-    public BalanceDTO findByEncryptedWalletId(String encryptedWalletId) {
+    public BalanceDTO findByWalletExternalCode(UUID walletExternalCode) {
 
-        BalanceEntity balanceEntity = balanceRepository.findByWalletId(Long.valueOf(encryptedWalletId))
+        BalanceEntity balanceEntity = balanceRepository.findByWalletwalletExternalCode(walletExternalCode)
                 .orElseThrow(BalanceNotFoundException::new);
 
         return BalanceEntityMapper.BALANCE_ENTITY_MAPPER.toDTO(balanceEntity);

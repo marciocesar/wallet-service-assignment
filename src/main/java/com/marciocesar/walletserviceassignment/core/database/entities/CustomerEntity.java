@@ -30,7 +30,7 @@ public class CustomerEntity {
     private String name;
 
     @Column(name = "EXTERNAL_CODE", nullable = false, updatable = false, unique = true, length = 36)
-    private UUID externalCode;
+    private UUID externalCustomerCode;
 
     @Email(message = "Email address must be valid")
     @Column(name = "EMAIL", nullable = false, unique = true, length = 150)

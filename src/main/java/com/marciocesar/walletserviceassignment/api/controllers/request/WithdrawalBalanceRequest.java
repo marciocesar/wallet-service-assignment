@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 public record WithdrawalBalanceRequest(
-        UUID customerCode,
-        String encryptedWalletId,
+        UUID externalCustomerCode,
+        UUID walletExternalCode,
         BigDecimal amount
 ) {
 }

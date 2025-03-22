@@ -33,8 +33,6 @@ public class WalletCreationService {
         final var customerEntity = customerRepository.findByExternalCode(createWalletRequestDTO.externalCustomerCode())
                 .orElseThrow(CustomerNotFoundException::new);
 
-        //todo implementar CustomerValidationService, irá validar status
-
         if (nonNull(customerEntity.getWallet())) {
             return WALLET_ENTITY_MAPPER.toDTO(customerEntity.getWallet());
         }

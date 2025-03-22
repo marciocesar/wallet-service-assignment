@@ -18,7 +18,7 @@ public interface CustomerEntityMapper {
 
     @Mapping(target = "id", source = "id")
     @Mapping(target = "name", source = "name")
-    @Mapping(target = "externalCode", source = "externalCode")
+    @Mapping(target = "customerExternalCode", source = "customerExternalCode")
     @Mapping(target = "email", source = "email")
     @Mapping(target = "status", source = "status")
     @Mapping(target = "birthday", source = "birthday")

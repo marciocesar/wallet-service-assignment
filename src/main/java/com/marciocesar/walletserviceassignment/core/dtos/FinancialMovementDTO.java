@@ -9,11 +9,11 @@ import java.util.UUID;
 @Builder
 public record FinancialMovementDTO(
         UUID customerExternalCode,
-        String encryptedWalletId,
+        UUID walletExternalCode,
         BigDecimal amount,
         WalletFinancialMovement.Type type,
 
         UUID thirdCustomerExternalCode,
-        String thirdEncryptedWalletId
+        UUID thirdWalletExternalCode
 ) {
 }

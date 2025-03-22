@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 @NoArgsConstructor
@@ -17,6 +18,10 @@ public class WalletEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Builder.Default
+    @Column(nullable = false, unique = true, updatable = false)
+    private UUID walletExternalCode = UUID.randomUUID();
 
     @CreationTimestamp
     @Column(name = "CREATION_DATE", updatable = false, nullable = false)

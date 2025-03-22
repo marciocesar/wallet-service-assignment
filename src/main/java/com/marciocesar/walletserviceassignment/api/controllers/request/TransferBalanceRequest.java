@@ -4,10 +4,10 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 public record TransferBalanceRequest(
-        UUID customerCode,
-        String encryptedWalletId,
+        UUID externalCustomerCode,
+        UUID walletExternalCode,
         BigDecimal amount,
-        UUID thirdCustomerCode,
-        String thirdEncryptedWalletId
+        UUID thirdCustomerExternalCode,
+        UUID thirdWalletExternalCode
 ) {
 }

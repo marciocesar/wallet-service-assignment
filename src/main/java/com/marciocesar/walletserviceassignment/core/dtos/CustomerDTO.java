@@ -8,7 +8,7 @@ import java.util.UUID;
 public record CustomerDTO(
         Long id,
         String name,
-        UUID externalCode,
+        UUID customerExternalCode,
         String email,
         CustomerStatusEnum status,
         LocalDateTime birthday,
