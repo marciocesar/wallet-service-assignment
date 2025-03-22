@@ -1,6 +1,7 @@
 package com.marciocesar.walletserviceassignment.api.controllers;
 
 import com.marciocesar.walletserviceassignment.api.controllers.request.DepositBalanceRequest;
+import com.marciocesar.walletserviceassignment.api.controllers.request.TransferBalanceRequest;
 import com.marciocesar.walletserviceassignment.api.controllers.request.WithdrawalBalanceRequest;
 import com.marciocesar.walletserviceassignment.api.controllers.response.BalanceResponse;
 import com.marciocesar.walletserviceassignment.core.dtos.FinancialMovementDTO;
@@ -15,7 +16,7 @@ import static com.marciocesar.walletserviceassignment.api.mapper.BalanceResponse
 @RestController
 @RequestMapping("/wallets/balances")
 @AllArgsConstructor
-public class BalanceManagerController {
+public class FinancialMovementController {
 
     private WalletFinancialMovementService walletFinancialMovementService;
 
@@ -43,6 +44,23 @@ public class BalanceManagerController {
                 .customerExternalCode(request.customerCode())
                 .amount(request.amount())
                 .type(WalletFinancialMovement.Type.WITHDRAWAL)
+                .build()
+        );
+
+        return BALANCE_RESPONSE_MAPPER.toResponse(balanceDTO);
+    }
+
+    @PutMapping("/transfer")
+    @ResponseStatus(value = HttpStatus.OK)
+    public BalanceResponse transfer(@RequestBody TransferBalanceRequest request) {
+
+        final var balanceDTO = walletFinancialMovementService.executeFinancialMovement(FinancialMovementDTO.builder()
+                .encryptedWalletId(request.encryptedWalletId())
+                .customerExternalCode(request.customerCode())
+                .thirdCustomerExternalCode(request.thirdCustomerCode())
+                .thirdEncryptedWalletId(request.thirdEncryptedWalletId())
+                .amount(request.amount())
+                .type(WalletFinancialMovement.Type.TRANSFERENCE)
                 .build()
         );
 

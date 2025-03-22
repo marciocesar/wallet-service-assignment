@@ -11,6 +11,9 @@ public record FinancialMovementDTO(
         UUID customerExternalCode,
         String encryptedWalletId,
         BigDecimal amount,
-        WalletFinancialMovement.Type type
+        WalletFinancialMovement.Type type,
+
+        UUID thirdCustomerExternalCode,
+        String thirdEncryptedWalletId
 ) {
 }
