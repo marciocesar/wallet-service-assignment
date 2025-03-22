@@ -7,6 +7,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
+import org.hibernate.envers.RelationTargetAuditMode;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -16,6 +20,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Entity
+@Audited
+@AuditTable(value = "BALANCE_LOG")
 @Table(name = "BALANCE")
 public class BalanceEntity {
 
@@ -24,12 +30,14 @@ public class BalanceEntity {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "ID_WALLET", nullable = false, unique = true)
+    @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
+    @JoinColumn(name = "ID_WALLET", nullable = false, unique = true, updatable = false)
     private WalletEntity wallet;
 
     @Column(name = "AMOUNT", nullable = false, precision = 10, scale = 2)
     private BigDecimal amount;
 
+    @NotAudited
     @CreationTimestamp
     @Column(name = "CREATION_DATE", updatable = false, nullable = false)
     private LocalDateTime creationDate;

@@ -6,11 +6,14 @@ spring:
     enabled: true
     path: /h2-console
   datasource:
-    url: jdbc:h2:mem:test
+    url: jdbc:h2:mem:test;MODE=PostgreSQL
     driverClassName: org.h2.Driver
     username: sa
     password:
   jpa:
+    properties.org.hibernate.envers:
+      audit_table_suffix: _LOG
+      store_data_at_delete: true
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: update
@@ -19,6 +22,7 @@ spring:
       hibernate.format_sql: true
     defer-datasource-initialization: true
   sql.init.mode: always
+
 
 
 server.port: 8081
