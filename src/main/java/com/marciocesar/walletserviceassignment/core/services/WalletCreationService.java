@@ -30,7 +30,7 @@ public class WalletCreationService {
 
     public WalletDTO create(CreateWalletRequestDTO createWalletRequestDTO) {
 
-        final var customerEntity = customerRepository.findByExternalCode(createWalletRequestDTO.externalCustomerCode())
+        final var customerEntity = customerRepository.findByCustomerExternalCode(createWalletRequestDTO.customerExternalCode())
                 .orElseThrow(CustomerNotFoundException::new);
 
         if (nonNull(customerEntity.getWallet())) {

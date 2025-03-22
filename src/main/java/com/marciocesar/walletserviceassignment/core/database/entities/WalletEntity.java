@@ -20,7 +20,7 @@ public class WalletEntity {
     private Long id;
 
     @Builder.Default
-    @Column(nullable = false, unique = true, updatable = false)
+    @Column(name = "EXTERNAL_CODE", nullable = false, unique = true, updatable = false)
     private UUID walletExternalCode = UUID.randomUUID();
 
     @CreationTimestamp

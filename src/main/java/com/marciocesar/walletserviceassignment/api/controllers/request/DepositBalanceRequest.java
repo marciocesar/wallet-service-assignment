@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 public record DepositBalanceRequest(
-        UUID externalCustomerCode,
+        UUID customerExternalCode,
         UUID walletExternalCode,
         BigDecimal amount
 ) {

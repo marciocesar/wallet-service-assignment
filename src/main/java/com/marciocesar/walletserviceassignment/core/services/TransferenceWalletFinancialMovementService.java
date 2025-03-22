@@ -25,7 +25,7 @@ public class TransferenceWalletFinancialMovementService implements WalletFinanci
     @Override
     public Optional<BalanceDTO> execute(FinancialMovementDTO financialMovementDTO) {
 
-        return walletRepository.findBywalletExternalCodeAndCustomerExternalCustomerCode(
+        return walletRepository.findByWalletExternalCodeAndCustomerCustomerExternalCode(
                         financialMovementDTO.walletExternalCode(),
                         financialMovementDTO.customerExternalCode()
                 ).map(it -> subtractAmount(it, financialMovementDTO.amount()))
@@ -38,7 +38,7 @@ public class TransferenceWalletFinancialMovementService implements WalletFinanci
     }
 
     private void transferToTarget(FinancialMovementDTO financialMovementDTO) {
-        walletRepository.findBywalletExternalCodeAndCustomerExternalCustomerCode(
+        walletRepository.findByWalletExternalCodeAndCustomerCustomerExternalCode(
                         financialMovementDTO.thirdWalletExternalCode(),
                         financialMovementDTO.thirdCustomerExternalCode()
                 ).map(it -> addAmount(it, financialMovementDTO.amount()))

@@ -9,5 +9,5 @@ import java.util.UUID;
 
 @Repository
 public interface CustomerRepository extends CrudRepository<CustomerEntity, Long> {
-    Optional<CustomerEntity> findByExternalCode(UUID externalCustomerCode);
+    Optional<CustomerEntity> findByCustomerExternalCode(UUID externalCustomerCode);
 }

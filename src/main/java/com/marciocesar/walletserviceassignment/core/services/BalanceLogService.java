@@ -27,7 +27,7 @@ public class BalanceLogService {
         final var startDateTime = startDate.atStartOfDay();
         final var endDateTime = endDate.atTime(23, 59, 59);
 
-        final var walletId = walletRepository.findBywalletExternalCode(walletExternalCode)
+        final var walletId = walletRepository.findByWalletExternalCode(walletExternalCode)
                 .orElseThrow(WalletNotFoundException::new)
                 .getId();
 

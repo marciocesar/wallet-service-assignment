@@ -9,5 +9,5 @@ import java.util.UUID;
 
 @Repository
 public interface BalanceRepository extends CrudRepository<BalanceEntity, Long> {
-    Optional<BalanceEntity> findByWalletwalletExternalCode(UUID walletExternalCode);
+    Optional<BalanceEntity> findByWalletWalletExternalCode(UUID walletExternalCode);
 }

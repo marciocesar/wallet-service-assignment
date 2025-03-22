@@ -31,7 +31,7 @@ public class BalanceEntity {
 
     @OneToOne
     @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
-    @JoinColumn(name = "ID_WALLET", nullable = false, unique = true, updatable = false)
+    @JoinColumn(name = "WALLET_ID", nullable = false, unique = true, updatable = false)
     private WalletEntity wallet;
 
     @Column(name = "AMOUNT", nullable = false, precision = 10, scale = 2)

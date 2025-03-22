@@ -21,7 +21,7 @@ public class WithdrawalWalletFinancialMovementService implements WalletFinancial
     @Override
     public Optional<BalanceDTO> execute(FinancialMovementDTO financialMovementDTO) {
 
-        return walletRepository.findBywalletExternalCodeAndCustomerExternalCustomerCode(
+        return walletRepository.findByWalletExternalCodeAndCustomerCustomerExternalCode(
                         financialMovementDTO.walletExternalCode(),
                         financialMovementDTO.customerExternalCode()
                 ).map(it -> subtractAmount(it, financialMovementDTO.amount()))

@@ -25,8 +25,8 @@ public class FinancialMovementController {
     public BalanceResponse deposit(@RequestBody DepositBalanceRequest request) {
 
         final var balanceDTO = walletFinancialMovementService.executeFinancialMovement(FinancialMovementDTO.builder()
-                .thirdWalletExternalCode(request.walletExternalCode())
-                .customerExternalCode(request.externalCustomerCode())
+                .walletExternalCode(request.walletExternalCode())
+                .customerExternalCode(request.customerExternalCode())
                 .amount(request.amount())
                 .type(WalletFinancialMovement.Type.DEPOSIT)
                 .build()
@@ -41,7 +41,7 @@ public class FinancialMovementController {
 
         final var balanceDTO = walletFinancialMovementService.executeFinancialMovement(FinancialMovementDTO.builder()
                 .walletExternalCode(request.walletExternalCode())
-                .customerExternalCode(request.externalCustomerCode())
+                .customerExternalCode(request.customerExternalCode())
                 .amount(request.amount())
                 .type(WalletFinancialMovement.Type.WITHDRAWAL)
                 .build()
@@ -56,7 +56,7 @@ public class FinancialMovementController {
 
         final var balanceDTO = walletFinancialMovementService.executeFinancialMovement(FinancialMovementDTO.builder()
                 .walletExternalCode(request.walletExternalCode())
-                .customerExternalCode(request.externalCustomerCode())
+                .customerExternalCode(request.customerExternalCode())
                 .thirdCustomerExternalCode(request.thirdCustomerExternalCode())
                 .thirdWalletExternalCode(request.thirdWalletExternalCode())
                 .amount(request.amount())

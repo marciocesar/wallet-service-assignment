@@ -21,7 +21,7 @@ public class DepositWalletFinancialMovementService implements WalletFinancialMov
     @Override
     public Optional<BalanceDTO> execute(FinancialMovementDTO financialMovementDTO) {
 
-        return walletRepository.findBywalletExternalCodeAndCustomerExternalCustomerCode(
+        return walletRepository.findByWalletExternalCodeAndCustomerCustomerExternalCode(
                         financialMovementDTO.walletExternalCode(),
                         financialMovementDTO.customerExternalCode()
                 ).map(it -> addAmount(it, financialMovementDTO.amount()))
