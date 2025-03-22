@@ -1,10 +1,7 @@
 package com.marciocesar.walletserviceassignment.core.database.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -29,6 +26,7 @@ public class WalletEntity {
     @JoinColumn(name = "ID_CUSTOMER", nullable = false, unique = true)
     private CustomerEntity customer;
 
-    @OneToOne(mappedBy = "wallet" , fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Setter
+    @OneToOne(mappedBy = "wallet", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private BalanceEntity balance;
 }

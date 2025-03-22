@@ -10,6 +10,7 @@ import org.mapstruct.factory.Mappers;
 
 import static com.marciocesar.walletserviceassignment.core.mapper.WalletEntityMapper.WALLET_ENTITY_MAPPER;
 
+//todo verificar se irá utilizar
 @Mapper(componentModel = "spring", uses = {WalletEntityMapper.class})
 public interface CustomerEntityMapper {
 

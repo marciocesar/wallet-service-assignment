@@ -11,6 +11,7 @@ public interface CreateWalletResponseMapper {
 
     CreateWalletResponseMapper CREATE_WALLET_RESPONSE_MAPPER = Mappers.getMapper(CreateWalletResponseMapper.class);
 
+    //todo verificar posteriormente se irá criptografar o dado ou retornar um UUID externo
     @Mapping(source = "id", target = "encryptedId")
     CreateWalletResponse toResponse(WalletDTO walletDTO);
 }
