@@ -1,6 +1,7 @@
 package com.marciocesar.walletserviceassignment.api.controllers;
 
 import com.marciocesar.walletserviceassignment.api.controllers.request.DepositBalanceRequest;
+import com.marciocesar.walletserviceassignment.api.controllers.request.WithdrawalBalanceRequest;
 import com.marciocesar.walletserviceassignment.api.controllers.response.BalanceResponse;
 import com.marciocesar.walletserviceassignment.core.dtos.FinancialMovementDTO;
 import com.marciocesar.walletserviceassignment.core.interfaces.WalletFinancialMovement;
@@ -27,6 +28,21 @@ public class BalanceManagerController {
                 .customerExternalCode(request.customerCode())
                 .amount(request.amount())
                 .type(WalletFinancialMovement.Type.DEPOSIT)
+                .build()
+        );
+
+        return BALANCE_RESPONSE_MAPPER.toResponse(balanceDTO);
+    }
+
+    @PutMapping("/withdrawal")
+    @ResponseStatus(value = HttpStatus.OK)
+    public BalanceResponse deposit(@RequestBody WithdrawalBalanceRequest request) {
+
+        final var balanceDTO = walletFinancialMovementService.executeFinancialMovement(FinancialMovementDTO.builder()
+                .encryptedWalletId(request.encryptedWalletId())
+                .customerExternalCode(request.customerCode())
+                .amount(request.amount())
+                .type(WalletFinancialMovement.Type.WITHDRAWAL)
                 .build()
         );
 
