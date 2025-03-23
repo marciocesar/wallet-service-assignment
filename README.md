@@ -49,7 +49,9 @@ This will start the application and make it accessible at `http://localhost:8081
     - **Response:** `BalanceResponse` object containing the balance details.
     - **Example Request:**
       ```bash
-      curl -X GET "http://localhost:8081/wallets/{walletExternalCode}/balances"
+      curl --location 'http://localhost:8081/wallets/6a86f698-de2b-4aee-a3a5-4db2efe0a822/balances' \
+      --header 'Content-Type: application/json' \
+      --data ''
       ```
 
 2. **Search Balance Per Period**
@@ -61,11 +63,12 @@ This will start the application and make it accessible at `http://localhost:8081
         - `endDate` (LocalDate): The end date of the period (format: `yyyy-MM-dd`).
         - `page` (int, optional): The page number (default: 0).
         - `size` (int, optional): The page size (default: 10).
-    - **Response:** `Page<DailyWalletSummaryResponse>` object containing the balance summary for each day within the
-      period.
+    - **Response:** `Page<DailyWalletSummaryResponse>` object containing the balance summary for each day within the period.
     - **Example Request:**
       ```bash
-      curl -X GET "http://localhost:8081/wallets/{walletExternalCode}/balances/statement?startDate=2025-10-01&endDate=2025-10-31&page=0&size=10"
+      curl --location 'http://localhost:8081/wallets/d0e79ab8-e8e6-4899-89f0-20c57c08ad99/balances/statement?startDate=2025-01-09&size=15' \
+      --header 'Content-Type: application/json' \
+      --data ''
       ```
     - **Note:** There is already pre-registered data that can be used to retrieve daily balances. Use the following
       `walletExternalCode`: `2d3d8d84-02ab-460b-b3d4-1d90c0f109ae`. The balance data for the period between `2025-10-01`
@@ -80,7 +83,9 @@ This will start the application and make it accessible at `http://localhost:8081
     - **Response:** `BalanceResponse` object containing the updated balance details.
     - **Example Request:**
       ```bash
-      curl -X PUT "http://localhost:8081/wallets/balances/deposit" -H "Content-Type: application/json" -d '{"amount": 100.0, "walletExternalCode": "{walletExternalCode}"}'
+      curl --location --request PUT 'http://localhost:8081/wallets/balances/deposit' \
+       --header 'Content-Type: application/json' \
+       --data '{"customerExternalCode": "d0e79ab8-e8e6-4899-89f0-20c57c08ad99", "walletExternalCode": "69d71e3c-219f-45ea-9c7a-7052490e8710","amount": "10"}'
       ```
 
 2. **Withdraw**
@@ -90,7 +95,9 @@ This will start the application and make it accessible at `http://localhost:8081
     - **Response:** `BalanceResponse` object containing the updated balance details.
     - **Example Request:**
       ```bash
-      curl -X PUT "http://localhost:8081/wallets/balances/withdraw" -H "Content-Type: application/json" -d '{"amount": 50.0, "walletExternalCode": "{walletExternalCode}"}'
+       curl --location --request PUT 'http://localhost:8081/wallets/balances/withdraw' \ 
+      --header 'Content-Type: application/json' \
+      --data '{"customerExternalCode": "d0e79ab8-e8e6-4899-89f0-20c57c08ad99","walletExternalCode": "69d71e3c-219f-45ea-9c7a-7052490e8710","amount": "4"}'
       ```
 
 3. **Transfer**
@@ -112,5 +119,7 @@ This will start the application and make it accessible at `http://localhost:8081
     - **Response:** `CreateWalletResponse` object containing the created wallet details.
     - **Example Request:**
       ```bash
-      curl -X POST "http://localhost:8081/wallets" -H "Content-Type: application/json" -d '{"name": "My Wallet", "currency": "USD"}'
+      curl --location --request PUT 'http://localhost:8081/wallets/balances/transfer' \
+      --header 'Content-Type: application/json' \
+      --data '{"customerExternalCode": "1bde4228-0c26-4f3d-8172-7735bf45d299","walletExternalCode": "c7a633b5-fe08-4d4a-8508-5878ba030bba","thirdCustomerExternalCode": "d0e79ab8-e8e6-4899-89f0-20c57c08ad99","thirdWalletExternalCode": "c954618e-ae4f-4f35-8893-9e96ef0b700a","amount": "6"}'
       ```
