@@ -16,15 +16,20 @@ import java.util.List;
 public class WalletFinancialMovementService {
 
     private List<WalletFinancialMovement> walletFinancialMovementList;
+    private FinancialMovementPersistenceService financialMovementPersistenceService;
 
     public BalanceDTO executeFinancialMovement(FinancialMovementDTO financialMovementDTO) {
 
         log.info("Initiating financial movement, financialMovementDTO: {}", financialMovementDTO);
 
-        return walletFinancialMovementList.stream()
+        final var balanceDTO = walletFinancialMovementList.stream()
                 .filter(it -> it.shouldExecute(financialMovementDTO.type()))
                 .findFirst()
                 .flatMap(it -> it.execute(financialMovementDTO))
                 .orElseThrow(WalletNotFoundException::new);
+
+        financialMovementPersistenceService.save(financialMovementDTO);
+
+        return balanceDTO;
     }
 }

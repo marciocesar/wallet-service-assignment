@@ -33,14 +33,16 @@ public class TransferenceWalletFinancialMovementService implements WalletFinanci
 
         log.info("Initiating transfer wallet financial movement, walletExternalCode: {}", financialMovementDTO);
 
-        return walletRepository.findByWalletExternalCodeAndCustomerCustomerExternalCode(
+        Optional<BalanceDTO> balanceDTO = walletRepository.findByWalletExternalCodeAndCustomerCustomerExternalCode(
                         financialMovementDTO.walletExternalCode(),
                         financialMovementDTO.customerExternalCode()
                 ).map(it -> subtractAmount(it, financialMovementDTO.amount()))
                 .map(balanceRepository::save)
                 .map(transferToThird(financialMovementDTO))
-                .map(financialMovementPersistenceService.save(financialMovementDTO))
                 .map(balanceEntityMapper::toDTO);
+
+        financialMovementPersistenceService.save(financialMovementDTO);
+        return balanceDTO;
     }
 
     private Function<BalanceEntity, BalanceEntity> transferToThird(FinancialMovementDTO financialMovementDTO) {
@@ -52,11 +54,15 @@ public class TransferenceWalletFinancialMovementService implements WalletFinanci
             walletRepository.findByWalletExternalCodeAndCustomerCustomerExternalCode(
                             financialMovementDTO.thirdWalletExternalCode(),
                             financialMovementDTO.thirdCustomerExternalCode()
-                    ).map(walletEntity -> addAmount(walletEntity, financialMovementDTO.amount()))
+                    )
+                    .map(walletEntity -> addAmount(walletEntity, financialMovementDTO.amount()))
+                    .map(balanceRepository::save)
                     .orElseThrow(WalletNotFoundException::new);
+
             return balanceEntity;
         };
     }
+
 
     @Override
     public boolean shouldExecute(TypeFinancialMovementEnum type) {

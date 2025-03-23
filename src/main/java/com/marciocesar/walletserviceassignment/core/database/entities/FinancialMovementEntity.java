@@ -24,16 +24,16 @@ public class FinancialMovementEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "CUSTOMER_EXTERNAL_CODE", nullable = false, unique = true, updatable = false)
+    @Column(name = "CUSTOMER_EXTERNAL_CODE", nullable = false, updatable = false)
     private UUID customerExternalCode;
 
-    @Column(name = "WALLET_EXTERNAL_CODE", nullable = false, unique = true, updatable = false)
+    @Column(name = "WALLET_EXTERNAL_CODE", nullable = false, updatable = false)
     private UUID walletExternalCode;
 
-    @Column(name = "THIRD_CUSTOMER_EXTERNAL_CODE", unique = true, updatable = false)
+    @Column(name = "THIRD_CUSTOMER_EXTERNAL_CODE", updatable = false)
     private UUID thirdCustomerExternalCode;
 
-    @Column(name = "THIRD_WALLET_EXTERNAL_CODE", unique = true, updatable = false)
+    @Column(name = "THIRD_WALLET_EXTERNAL_CODE", updatable = false)
     private UUID thirdWalletExternalCode;
 
     @Column(name = "AMOUNT", nullable = false, precision = 10, scale = 2, updatable = false)

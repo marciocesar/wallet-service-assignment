@@ -35,7 +35,6 @@ public class WithdrawWalletFinancialMovementService implements WalletFinancialMo
                         financialMovementDTO.customerExternalCode()
                 ).map(balance -> subtractAmount(balance, financialMovementDTO.amount()))
                 .map(balanceRepository::save)
-                .map(financialMovementPersistenceService.save(financialMovementDTO))
                 .map(balanceEntityMapper::toDTO);
     }
 

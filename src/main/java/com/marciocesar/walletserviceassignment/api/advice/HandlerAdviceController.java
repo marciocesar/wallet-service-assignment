@@ -21,7 +21,7 @@ public class HandlerAdviceController {
     })
     protected ApiErrorResponse badRequestHandler(RuntimeException ex) {
 
-        ApiErrorResponse apiErrorResponse = new ApiErrorResponse(BAD_REQUEST);
+        final var apiErrorResponse = new ApiErrorResponse(BAD_REQUEST);
         apiErrorResponse.setMessage(ex.getMessage());
         return apiErrorResponse;
     }
@@ -34,7 +34,7 @@ public class HandlerAdviceController {
     })
     protected ApiErrorResponse notFoundHandler(RuntimeException ex) {
 
-        ApiErrorResponse apiErrorResponse = new ApiErrorResponse(NOT_FOUND);
+        final var apiErrorResponse = new ApiErrorResponse(NOT_FOUND);
         apiErrorResponse.setMessage(ex.getMessage());
         return apiErrorResponse;
     }
@@ -43,7 +43,7 @@ public class HandlerAdviceController {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ApiErrorResponse MethodArgumentNotValidHandler(MethodArgumentNotValidException ex) {
 
-        ApiErrorResponse apiErrorResponse = new ApiErrorResponse(BAD_REQUEST);
+        final var apiErrorResponse = new ApiErrorResponse(BAD_REQUEST);
         apiErrorResponse.setMessage("Validation error");
         apiErrorResponse.addSubError(ex.getBindingResult().getFieldErrors());
 

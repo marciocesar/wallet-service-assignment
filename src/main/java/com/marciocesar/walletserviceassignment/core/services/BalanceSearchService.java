@@ -1,6 +1,5 @@
 package com.marciocesar.walletserviceassignment.core.services;
 
-import com.marciocesar.walletserviceassignment.core.database.entities.BalanceEntity;
 import com.marciocesar.walletserviceassignment.core.database.repositories.BalanceRepository;
 import com.marciocesar.walletserviceassignment.core.dtos.BalanceDTO;
 import com.marciocesar.walletserviceassignment.core.exceptions.BalanceNotFoundException;
@@ -23,7 +22,7 @@ public class BalanceSearchService {
 
         log.info("searching balance, walletExternalCode: {}", walletExternalCode);
 
-        BalanceEntity balanceEntity = balanceRepository.findByWalletWalletExternalCode(walletExternalCode)
+        final var balanceEntity = balanceRepository.findByWalletWalletExternalCode(walletExternalCode)
                 .orElseThrow(BalanceNotFoundException::new);
 
         return BalanceEntityMapper.toDTO(balanceEntity);

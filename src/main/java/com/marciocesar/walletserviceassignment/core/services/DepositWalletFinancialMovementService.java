@@ -24,7 +24,6 @@ public class DepositWalletFinancialMovementService implements WalletFinancialMov
 
     private WalletRepository walletRepository;
     private BalanceRepository balanceRepository;
-    private FinancialMovementPersistenceService financialMovementPersistenceService;
     private BalanceEntityMapper balanceEntityMapper;
 
     @Override
@@ -35,9 +34,9 @@ public class DepositWalletFinancialMovementService implements WalletFinancialMov
         return walletRepository.findByWalletExternalCodeAndCustomerCustomerExternalCode(
                         financialMovementDTO.walletExternalCode(),
                         financialMovementDTO.customerExternalCode()
-                ).map(it -> addAmount(it, financialMovementDTO.amount()))
+                )
+                .map(it -> addAmount(it, financialMovementDTO.amount()))
                 .map(balanceRepository::save)
-                .map(financialMovementPersistenceService.save(financialMovementDTO))
                 .map(balanceEntityMapper::toDTO);
     }
 

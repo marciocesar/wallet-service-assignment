@@ -41,7 +41,7 @@ public class WalletCreationService {
             return walletEntityMapper.toDTO(customerEntity.getWallet());
         }
 
-        WalletEntity walletEntity = persistWallet(customerEntity);
+        final var walletEntity = persistWallet(customerEntity);
         persistBalance(walletEntity);
 
         return walletEntityMapper.toDTO(walletEntity);
