@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -17,9 +18,10 @@ import java.util.UUID;
 
 import static org.springframework.data.domain.Pageable.ofSize;
 
+@Validated
 @RestController
-@RequestMapping("/wallets/{walletExternalCode}/balances")
 @AllArgsConstructor
+@RequestMapping("/wallets/{walletExternalCode}/balances")
 public class BalanceSearchController {
 
     private BalanceSearchService balanceSearchService;
@@ -40,8 +42,8 @@ public class BalanceSearchController {
             @PathVariable(value = "walletExternalCode") UUID walletExternalCode,
             @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
-            @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "10") int size
+            @RequestParam(value = "page", defaultValue = "0", required = false) int page,
+            @RequestParam(value = "size", defaultValue = "10", required = false) int size
     ) {
         return balanceLogService.getLastDailyBalancesByPeriod(startDate,
                 endDate,

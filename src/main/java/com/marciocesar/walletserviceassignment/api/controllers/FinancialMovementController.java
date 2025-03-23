@@ -7,12 +7,15 @@ import com.marciocesar.walletserviceassignment.api.controllers.response.BalanceR
 import com.marciocesar.walletserviceassignment.api.mapper.BalanceResponseMapper;
 import com.marciocesar.walletserviceassignment.core.mapper.FinancialMovementMapper;
 import com.marciocesar.walletserviceassignment.core.services.WalletFinancialMovementService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import static com.marciocesar.walletserviceassignment.core.enums.TypeFinancialMovementEnum.*;
 
+@Validated
 @RestController
 @RequestMapping("/wallets/balances")
 @AllArgsConstructor
@@ -24,7 +27,7 @@ public class FinancialMovementController {
 
     @PutMapping("/deposit")
     @ResponseStatus(value = HttpStatus.OK)
-    public BalanceResponse deposit(@RequestBody DepositBalanceRequest request) {
+    public BalanceResponse deposit(@Valid @RequestBody DepositBalanceRequest request) {
 
         final var balanceDTO = service.executeFinancialMovement(
                 financialMovementMapper.toDTO(request, DEPOSIT)
@@ -35,7 +38,7 @@ public class FinancialMovementController {
 
     @PutMapping("/withdraw")
     @ResponseStatus(value = HttpStatus.OK)
-    public BalanceResponse withdraw(@RequestBody WithdrawalBalanceRequest request) {
+    public BalanceResponse withdraw(@Valid @RequestBody WithdrawalBalanceRequest request) {
 
         final var balanceDTO = service.executeFinancialMovement(
                 financialMovementMapper.toDTO(request, WITHDRAW)
@@ -46,7 +49,7 @@ public class FinancialMovementController {
 
     @PutMapping("/transfer")
     @ResponseStatus(value = HttpStatus.OK)
-    public BalanceResponse transfer(@RequestBody TransferBalanceRequest request) {
+    public BalanceResponse transfer(@Valid @RequestBody TransferBalanceRequest request) {
 
         final var balanceDTO = service.executeFinancialMovement(
                 financialMovementMapper.toDTO(request, TRANSFER)
