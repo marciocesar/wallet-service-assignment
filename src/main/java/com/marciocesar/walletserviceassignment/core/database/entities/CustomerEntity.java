@@ -1,6 +1,5 @@
 package com.marciocesar.walletserviceassignment.core.database.entities;
 
-import com.marciocesar.walletserviceassignment.core.enums.CustomerStatusEnum;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
@@ -35,10 +34,6 @@ public class CustomerEntity {
     @Email(message = "Email address must be valid")
     @Column(name = "EMAIL", nullable = false, unique = true, length = 150)
     private String email;
-
-    @Enumerated(EnumType.STRING) // Salva o nome textual do Enum
-    @Column(name = "STATUS", nullable = false)
-    private CustomerStatusEnum status;
 
     @Column(name = "BIRTHDAY", nullable = false)
     private LocalDateTime birthday;
