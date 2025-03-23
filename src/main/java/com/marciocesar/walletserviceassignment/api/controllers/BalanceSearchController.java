@@ -10,7 +10,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -18,7 +17,6 @@ import java.util.UUID;
 
 import static org.springframework.data.domain.Pageable.ofSize;
 
-@Validated
 @RestController
 @AllArgsConstructor
 @RequestMapping("/wallets/{walletExternalCode}/balances")
