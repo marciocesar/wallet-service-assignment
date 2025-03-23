@@ -9,8 +9,5 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface BalanceResponseMapper {
-
-    BalanceResponseMapper BALANCE_RESPONSE_MAPPER = Mappers.getMapper(BalanceResponseMapper.class);
-
     BalanceResponse toResponse(BalanceDTO balanceDTO);
 }

@@ -4,6 +4,7 @@ import com.marciocesar.walletserviceassignment.core.database.entities.BalanceEnt
 import com.marciocesar.walletserviceassignment.core.database.entities.WalletEntity;
 import com.marciocesar.walletserviceassignment.core.dtos.BalanceDTO;
 import com.marciocesar.walletserviceassignment.core.dtos.FinancialMovementDTO;
+import com.marciocesar.walletserviceassignment.core.enums.TypeFinancialMovementEnum;
 import com.marciocesar.walletserviceassignment.core.exceptions.NotEnoughBalanceException;
 
 import java.math.BigDecimal;
@@ -12,11 +13,7 @@ import java.util.Optional;
 public interface WalletFinancialMovement {
     Optional<BalanceDTO> execute(FinancialMovementDTO financialMovementDTO);
 
-    boolean shouldExecute(Type type);
-
-    enum Type {
-        DEPOSIT, TRANSFERENCE, WITHDRAWAL
-    }
+    boolean shouldExecute(TypeFinancialMovementEnum type);
 
     default BalanceEntity addAmount(WalletEntity wallet, BigDecimal amount) {
         BalanceEntity balance = wallet.getBalance();

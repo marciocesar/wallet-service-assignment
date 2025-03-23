@@ -1,6 +1,6 @@
 package com.marciocesar.walletserviceassignment.core.dtos;
 
-import com.marciocesar.walletserviceassignment.core.interfaces.WalletFinancialMovement;
+import com.marciocesar.walletserviceassignment.core.enums.TypeFinancialMovementEnum;
 import lombok.Builder;
 
 import java.math.BigDecimal;
@@ -11,7 +11,7 @@ public record FinancialMovementDTO(
         UUID customerExternalCode,
         UUID walletExternalCode,
         BigDecimal amount,
-        WalletFinancialMovement.Type type,
+        TypeFinancialMovementEnum type,
         UUID thirdCustomerExternalCode,
         UUID thirdWalletExternalCode
 ) {

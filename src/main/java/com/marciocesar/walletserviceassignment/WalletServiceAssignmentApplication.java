@@ -12,7 +12,9 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationPropertiesScan(basePackages = "com.marciocesar.walletserviceassignment.api.configs")
 @ComponentScan(basePackages = {
         "com.marciocesar.walletserviceassignment.core.services",
-        "com.marciocesar.walletserviceassignment.api.controllers"
+        "com.marciocesar.walletserviceassignment.api.controllers",
+        "com.marciocesar.walletserviceassignment.core.mapper",
+        "com.marciocesar.walletserviceassignment.api.mapper",
 })
 @EntityScan(basePackages = "com.marciocesar.walletserviceassignment.core.database.entities")
 public class WalletServiceAssignmentApplication {

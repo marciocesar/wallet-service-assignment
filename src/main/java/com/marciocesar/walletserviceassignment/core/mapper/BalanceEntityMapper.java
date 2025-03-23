@@ -7,8 +7,5 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface BalanceEntityMapper {
-
-    BalanceEntityMapper BALANCE_ENTITY_MAPPER = Mappers.getMapper(BalanceEntityMapper.class);
-
     BalanceDTO toDTO(BalanceEntity balanceEntity);
 }

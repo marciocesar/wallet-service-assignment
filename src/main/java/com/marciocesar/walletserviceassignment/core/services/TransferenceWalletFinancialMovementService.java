@@ -1,9 +1,11 @@
 package com.marciocesar.walletserviceassignment.core.services;
 
+import com.marciocesar.walletserviceassignment.core.database.entities.BalanceEntity;
 import com.marciocesar.walletserviceassignment.core.database.repositories.BalanceRepository;
 import com.marciocesar.walletserviceassignment.core.database.repositories.WalletRepository;
 import com.marciocesar.walletserviceassignment.core.dtos.BalanceDTO;
 import com.marciocesar.walletserviceassignment.core.dtos.FinancialMovementDTO;
+import com.marciocesar.walletserviceassignment.core.enums.TypeFinancialMovementEnum;
 import com.marciocesar.walletserviceassignment.core.exceptions.WalletNotFoundException;
 import com.marciocesar.walletserviceassignment.core.interfaces.WalletFinancialMovement;
 import com.marciocesar.walletserviceassignment.core.mapper.BalanceEntityMapper;
@@ -13,6 +15,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+import java.util.function.Function;
 
 @Service
 @AllArgsConstructor
@@ -21,6 +24,8 @@ public class TransferenceWalletFinancialMovementService implements WalletFinanci
 
     private WalletRepository walletRepository;
     private BalanceRepository balanceRepository;
+    private BalanceEntityMapper balanceEntityMapper;
+    private FinancialMovementPersistenceService financialMovementPersistenceService;
 
     @Override
     public Optional<BalanceDTO> execute(FinancialMovementDTO financialMovementDTO) {
@@ -30,23 +35,26 @@ public class TransferenceWalletFinancialMovementService implements WalletFinanci
                         financialMovementDTO.customerExternalCode()
                 ).map(it -> subtractAmount(it, financialMovementDTO.amount()))
                 .map(balanceRepository::save)
-                .map(it -> {
-                            transferToTarget(financialMovementDTO);
-                            return it;
-                        }
-                ).map(BalanceEntityMapper.BALANCE_ENTITY_MAPPER::toDTO);
+                .map(transferToThird(financialMovementDTO))
+                .map(financialMovementPersistenceService.save(financialMovementDTO))
+                .map(balanceEntityMapper::toDTO);
     }
 
-    private void transferToTarget(FinancialMovementDTO financialMovementDTO) {
-        walletRepository.findByWalletExternalCodeAndCustomerCustomerExternalCode(
-                        financialMovementDTO.thirdWalletExternalCode(),
-                        financialMovementDTO.thirdCustomerExternalCode()
-                ).map(it -> addAmount(it, financialMovementDTO.amount()))
-                .orElseThrow(WalletNotFoundException::new);
+    private Function<BalanceEntity, BalanceEntity> transferToThird(FinancialMovementDTO financialMovementDTO) {
+        return balanceEntity -> {
+
+            walletRepository.findByWalletExternalCodeAndCustomerCustomerExternalCode(
+                            financialMovementDTO.thirdWalletExternalCode(),
+                            financialMovementDTO.thirdCustomerExternalCode()
+                    ).map(walletEntity -> addAmount(walletEntity, financialMovementDTO.amount()))
+                    .orElseThrow(WalletNotFoundException::new);
+            return balanceEntity;
+        };
     }
+
 
     @Override
-    public boolean shouldExecute(Type type) {
-        return Type.TRANSFERENCE.equals(type);
+    public boolean shouldExecute(TypeFinancialMovementEnum type) {
+        return TypeFinancialMovementEnum.TRANSFER.equals(type);
     }
 }

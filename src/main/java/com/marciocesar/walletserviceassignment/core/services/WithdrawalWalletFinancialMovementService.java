@@ -4,6 +4,7 @@ import com.marciocesar.walletserviceassignment.core.database.repositories.Balanc
 import com.marciocesar.walletserviceassignment.core.database.repositories.WalletRepository;
 import com.marciocesar.walletserviceassignment.core.dtos.BalanceDTO;
 import com.marciocesar.walletserviceassignment.core.dtos.FinancialMovementDTO;
+import com.marciocesar.walletserviceassignment.core.enums.TypeFinancialMovementEnum;
 import com.marciocesar.walletserviceassignment.core.interfaces.WalletFinancialMovement;
 import com.marciocesar.walletserviceassignment.core.mapper.BalanceEntityMapper;
 import lombok.AllArgsConstructor;
@@ -17,6 +18,8 @@ public class WithdrawalWalletFinancialMovementService implements WalletFinancial
 
     private WalletRepository walletRepository;
     private BalanceRepository balanceRepository;
+    private BalanceEntityMapper balanceEntityMapper;
+    private FinancialMovementPersistenceService financialMovementPersistenceService;
 
     @Override
     public Optional<BalanceDTO> execute(FinancialMovementDTO financialMovementDTO) {
@@ -24,13 +27,14 @@ public class WithdrawalWalletFinancialMovementService implements WalletFinancial
         return walletRepository.findByWalletExternalCodeAndCustomerCustomerExternalCode(
                         financialMovementDTO.walletExternalCode(),
                         financialMovementDTO.customerExternalCode()
-                ).map(it -> subtractAmount(it, financialMovementDTO.amount()))
+                ).map(balance -> subtractAmount(balance, financialMovementDTO.amount()))
                 .map(balanceRepository::save)
-                .map(BalanceEntityMapper.BALANCE_ENTITY_MAPPER::toDTO);
+                .map(financialMovementPersistenceService.save(financialMovementDTO))
+                .map(balanceEntityMapper::toDTO);
     }
 
     @Override
-    public boolean shouldExecute(final Type type) {
-        return Type.WITHDRAWAL.equals(type);
+    public boolean shouldExecute(final TypeFinancialMovementEnum type) {
+        return TypeFinancialMovementEnum.WITHDRAW.equals(type);
     }
 }

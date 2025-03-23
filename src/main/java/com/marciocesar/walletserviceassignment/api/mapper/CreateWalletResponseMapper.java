@@ -11,6 +11,5 @@ public interface CreateWalletResponseMapper {
 
     CreateWalletResponseMapper CREATE_WALLET_RESPONSE_MAPPER = Mappers.getMapper(CreateWalletResponseMapper.class);
 
-    @Mapping(source = "walletExternalCode", target = "walletExternalCode")
-    CreateWalletResponse toResponse(WalletDTO walletDTO);
+
 }

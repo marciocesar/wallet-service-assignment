@@ -15,12 +15,13 @@ import java.util.UUID;
 public class BalanceSearchService {
 
     private BalanceRepository balanceRepository;
+    private BalanceEntityMapper BalanceEntityMapper;
 
     public BalanceDTO findByWalletExternalCode(UUID walletExternalCode) {
 
         BalanceEntity balanceEntity = balanceRepository.findByWalletWalletExternalCode(walletExternalCode)
                 .orElseThrow(BalanceNotFoundException::new);
 
-        return BalanceEntityMapper.BALANCE_ENTITY_MAPPER.toDTO(balanceEntity);
+        return BalanceEntityMapper.toDTO(balanceEntity);
     }
 }

@@ -4,6 +4,7 @@ import com.marciocesar.walletserviceassignment.core.database.repositories.Balanc
 import com.marciocesar.walletserviceassignment.core.database.repositories.WalletRepository;
 import com.marciocesar.walletserviceassignment.core.dtos.BalanceDTO;
 import com.marciocesar.walletserviceassignment.core.dtos.FinancialMovementDTO;
+import com.marciocesar.walletserviceassignment.core.enums.TypeFinancialMovementEnum;
 import com.marciocesar.walletserviceassignment.core.interfaces.WalletFinancialMovement;
 import com.marciocesar.walletserviceassignment.core.mapper.BalanceEntityMapper;
 import lombok.AllArgsConstructor;
@@ -11,12 +12,17 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+import static com.marciocesar.walletserviceassignment.core.enums.TypeFinancialMovementEnum.DEPOSIT;
+
+
 @Service
 @AllArgsConstructor
 public class DepositWalletFinancialMovementService implements WalletFinancialMovement {
 
     private WalletRepository walletRepository;
     private BalanceRepository balanceRepository;
+    private FinancialMovementPersistenceService financialMovementPersistenceService;
+    private BalanceEntityMapper balanceEntityMapper;
 
     @Override
     public Optional<BalanceDTO> execute(FinancialMovementDTO financialMovementDTO) {
@@ -26,11 +32,12 @@ public class DepositWalletFinancialMovementService implements WalletFinancialMov
                         financialMovementDTO.customerExternalCode()
                 ).map(it -> addAmount(it, financialMovementDTO.amount()))
                 .map(balanceRepository::save)
-                .map(BalanceEntityMapper.BALANCE_ENTITY_MAPPER::toDTO);
+                .map(financialMovementPersistenceService.save(financialMovementDTO))
+                .map(balanceEntityMapper::toDTO);
     }
 
     @Override
-    public boolean shouldExecute(Type type) {
-        return Type.DEPOSIT.equals(type);
+    public boolean shouldExecute(TypeFinancialMovementEnum type) {
+        return DEPOSIT.equals(type);
     }
 }
