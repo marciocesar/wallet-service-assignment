@@ -11,6 +11,7 @@ import com.marciocesar.walletserviceassignment.core.dtos.WalletDTO;
 import com.marciocesar.walletserviceassignment.core.exceptions.CustomerNotFoundException;
 import com.marciocesar.walletserviceassignment.core.mapper.WalletEntityMapper;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,7 @@ import java.math.BigDecimal;
 
 import static java.util.Objects.nonNull;
 
+@Slf4j
 @Service
 @Transactional
 @AllArgsConstructor
@@ -29,6 +31,8 @@ public class WalletCreationService {
     private WalletEntityMapper walletEntityMapper;
 
     public WalletDTO create(CreateWalletDTO createWalletDTO) {
+
+        log.info("Initiating wallet creation, customerExternalCode: {}", createWalletDTO.customerExternalCode());
 
         final var customerEntity = customerRepository.findByCustomerExternalCode(createWalletDTO.customerExternalCode())
                 .orElseThrow(CustomerNotFoundException::new);

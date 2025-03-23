@@ -5,10 +5,12 @@ import com.marciocesar.walletserviceassignment.core.database.repositories.Financ
 import com.marciocesar.walletserviceassignment.core.dtos.FinancialMovementDTO;
 import com.marciocesar.walletserviceassignment.core.mapper.FinancialMovementMapper;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.function.Function;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class FinancialMovementPersistenceService {
@@ -17,6 +19,9 @@ public class FinancialMovementPersistenceService {
     private FinancialMovementMapper financialMovementMapper;
 
     public Function<BalanceEntity, BalanceEntity> save(FinancialMovementDTO financialMovementDTO) {
+
+        log.info("Initiating financial movement persistence, financialMovementDTO: {}", financialMovementDTO);
+
         return it -> {
             financialMovementRepository.save(financialMovementMapper.toEntity(financialMovementDTO));
             return it;

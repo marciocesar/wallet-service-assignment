@@ -8,6 +8,7 @@ import com.marciocesar.walletserviceassignment.core.enums.TypeFinancialMovementE
 import com.marciocesar.walletserviceassignment.core.interfaces.WalletFinancialMovement;
 import com.marciocesar.walletserviceassignment.core.mapper.BalanceEntityMapper;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +16,7 @@ import java.util.Optional;
 
 import static com.marciocesar.walletserviceassignment.core.enums.TypeFinancialMovementEnum.DEPOSIT;
 
-
+@Slf4j
 @Service
 @Transactional
 @AllArgsConstructor
@@ -28,6 +29,8 @@ public class DepositWalletFinancialMovementService implements WalletFinancialMov
 
     @Override
     public Optional<BalanceDTO> execute(FinancialMovementDTO financialMovementDTO) {
+
+        log.info("Initiating deposit wallet financial movement, walletExternalCode: {}", financialMovementDTO);
 
         return walletRepository.findByWalletExternalCodeAndCustomerCustomerExternalCode(
                         financialMovementDTO.walletExternalCode(),

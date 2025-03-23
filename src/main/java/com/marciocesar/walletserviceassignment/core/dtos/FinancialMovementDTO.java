@@ -15,4 +15,14 @@ public record FinancialMovementDTO(
         UUID thirdCustomerExternalCode,
         UUID thirdWalletExternalCode
 ) {
+    @Override
+    public String toString() {
+        return "FinancialMovementDTO{" +
+                "customerExternalCode=" + customerExternalCode +
+                ", walletExternalCode=" + walletExternalCode +
+                ", type=" + type +
+                ", thirdCustomerExternalCode=" + thirdCustomerExternalCode +
+                ", thirdWalletExternalCode=" + thirdWalletExternalCode +
+                '}';
+    }
 }

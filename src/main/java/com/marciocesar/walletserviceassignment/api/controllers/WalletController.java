@@ -7,10 +7,12 @@ import com.marciocesar.walletserviceassignment.core.dtos.WalletDTO;
 import com.marciocesar.walletserviceassignment.core.services.WalletCreationService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @Validated
 @RestController
 @RequestMapping("/wallets")
@@ -23,6 +25,8 @@ public class WalletController {
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
     public CreateWalletResponse createWallet(@Valid @RequestBody CreateWalletRequest createWalletRequest) {
+
+        log.info("receive request to create wallet, CreateWalletRequest: {}", createWalletRequest);
 
         WalletDTO walletDTO = walletCreationService.create(createWalletMapper.toDTO(createWalletRequest));
 

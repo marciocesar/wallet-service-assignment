@@ -10,12 +10,14 @@ import com.marciocesar.walletserviceassignment.core.exceptions.WalletNotFoundExc
 import com.marciocesar.walletserviceassignment.core.interfaces.WalletFinancialMovement;
 import com.marciocesar.walletserviceassignment.core.mapper.BalanceEntityMapper;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 import java.util.function.Function;
 
+@Slf4j
 @Service
 @Transactional
 @AllArgsConstructor
@@ -29,6 +31,8 @@ public class TransferenceWalletFinancialMovementService implements WalletFinanci
     @Override
     public Optional<BalanceDTO> execute(FinancialMovementDTO financialMovementDTO) {
 
+        log.info("Initiating transfer wallet financial movement, walletExternalCode: {}", financialMovementDTO);
+
         return walletRepository.findByWalletExternalCodeAndCustomerCustomerExternalCode(
                         financialMovementDTO.walletExternalCode(),
                         financialMovementDTO.customerExternalCode()
@@ -40,6 +44,9 @@ public class TransferenceWalletFinancialMovementService implements WalletFinanci
     }
 
     private Function<BalanceEntity, BalanceEntity> transferToThird(FinancialMovementDTO financialMovementDTO) {
+
+        log.info("Initiating transfer to third wallet financial movement, walletExternalCode: {}", financialMovementDTO);
+
         return balanceEntity -> {
 
             walletRepository.findByWalletExternalCodeAndCustomerCustomerExternalCode(
@@ -50,7 +57,6 @@ public class TransferenceWalletFinancialMovementService implements WalletFinanci
             return balanceEntity;
         };
     }
-
 
     @Override
     public boolean shouldExecute(TypeFinancialMovementEnum type) {

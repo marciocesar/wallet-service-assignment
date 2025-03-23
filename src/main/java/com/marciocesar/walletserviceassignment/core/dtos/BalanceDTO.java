@@ -9,5 +9,13 @@ public record BalanceDTO(
         LocalDateTime creationDate,
         LocalDateTime updateDate
 ) {
+    @Override
+    public String toString() {
+        return "BalanceDTO{" +
+                "id=" + id +
+                ", creationDate=" + creationDate +
+                ", updateDate=" + updateDate +
+                '}';
+    }
 }
 

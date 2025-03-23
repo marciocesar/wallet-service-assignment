@@ -16,4 +16,11 @@ public record DepositBalanceRequest(
         @DecimalMin(value = "0.1", message = "Amount must be greater than zero.")
         BigDecimal amount
 ) {
+    @Override
+    public String toString() {
+        return "DepositBalanceRequest{" +
+                "customerExternalCode=" + customerExternalCode +
+                ", walletExternalCode=" + walletExternalCode +
+                '}';
+    }
 }

@@ -7,6 +7,7 @@ import com.marciocesar.walletserviceassignment.core.dtos.BalanceDTO;
 import com.marciocesar.walletserviceassignment.core.services.BalanceLogService;
 import com.marciocesar.walletserviceassignment.core.services.BalanceSearchService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import java.util.UUID;
 
 import static org.springframework.data.domain.Pageable.ofSize;
 
+@Slf4j
 @RestController
 @AllArgsConstructor
 @RequestMapping("/wallets/{walletExternalCode}/balances")
@@ -30,7 +32,10 @@ public class BalanceSearchController {
     @ResponseStatus(value = HttpStatus.OK)
     public BalanceResponse searchBalance(@PathVariable UUID walletExternalCode) {
 
+        log.info("receive request to search balance, walletExternalCode: {}", walletExternalCode);
+
         BalanceDTO balanceDTO = balanceSearchService.findByWalletExternalCode(walletExternalCode);
+
         return balanceResponseMapper.toResponse(balanceDTO);
     }
 
@@ -43,6 +48,13 @@ public class BalanceSearchController {
             @RequestParam(value = "page", defaultValue = "0", required = false) int page,
             @RequestParam(value = "size", defaultValue = "10", required = false) int size
     ) {
+
+        log.info("receive request to search balance per period, walletExternalCode: {}, startDate: {}, endDate: {}",
+                walletExternalCode,
+                startDate,
+                endDate
+        );
+
         return balanceLogService.getLastDailyBalancesByPeriod(startDate,
                 endDate,
                 ofSize(size).withPage(page),

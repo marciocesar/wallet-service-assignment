@@ -23,4 +23,13 @@ public record TransferBalanceRequest(
         @NotNull(message = "Third party wallet external code is required.")
         UUID thirdWalletExternalCode
 ) {
+    @Override
+    public String toString() {
+        return "TransferBalanceRequest{" +
+                "customerExternalCode=" + customerExternalCode +
+                ", walletExternalCode=" + walletExternalCode +
+                ", thirdCustomerExternalCode=" + thirdCustomerExternalCode +
+                ", thirdWalletExternalCode=" + thirdWalletExternalCode +
+                '}';
+    }
 }

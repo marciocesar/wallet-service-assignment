@@ -9,12 +9,14 @@ import com.marciocesar.walletserviceassignment.core.mapper.FinancialMovementMapp
 import com.marciocesar.walletserviceassignment.core.services.WalletFinancialMovementService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import static com.marciocesar.walletserviceassignment.core.enums.TypeFinancialMovementEnum.*;
 
+@Slf4j
 @Validated
 @RestController
 @RequestMapping("/wallets/balances")
@@ -29,6 +31,8 @@ public class FinancialMovementController {
     @ResponseStatus(value = HttpStatus.OK)
     public BalanceResponse deposit(@Valid @RequestBody DepositBalanceRequest request) {
 
+        log.info("receive request to deposit, DepositBalanceRequest: {}", request);
+
         final var balanceDTO = service.executeFinancialMovement(
                 financialMovementMapper.toDTO(request, DEPOSIT)
         );
@@ -40,6 +44,8 @@ public class FinancialMovementController {
     @ResponseStatus(value = HttpStatus.OK)
     public BalanceResponse withdraw(@Valid @RequestBody WithdrawalBalanceRequest request) {
 
+        log.info("receive request to withdraw, WithdrawalBalanceRequest: {}", request);
+
         final var balanceDTO = service.executeFinancialMovement(
                 financialMovementMapper.toDTO(request, WITHDRAW)
         );
@@ -50,6 +56,8 @@ public class FinancialMovementController {
     @PutMapping("/transfer")
     @ResponseStatus(value = HttpStatus.OK)
     public BalanceResponse transfer(@Valid @RequestBody TransferBalanceRequest request) {
+
+        log.info("receive request to transfer, TransferBalanceRequest: {}", request);
 
         final var balanceDTO = service.executeFinancialMovement(
                 financialMovementMapper.toDTO(request, TRANSFER)
