@@ -4,9 +4,7 @@ import com.marciocesar.walletserviceassignment.builder.BalanceBuilder;
 import com.marciocesar.walletserviceassignment.builder.CustomerBuilder;
 import com.marciocesar.walletserviceassignment.builder.WalletBuilder;
 import com.marciocesar.walletserviceassignment.core.database.entities.BalanceEntity;
-import com.marciocesar.walletserviceassignment.core.database.entities.CustomerEntity;
 import com.marciocesar.walletserviceassignment.core.database.entities.WalletEntity;
-import com.marciocesar.walletserviceassignment.core.database.repositories.BalanceLogRepository;
 import com.marciocesar.walletserviceassignment.core.database.repositories.BalanceRepository;
 import com.marciocesar.walletserviceassignment.core.database.repositories.CustomerRepository;
 import com.marciocesar.walletserviceassignment.core.database.repositories.WalletRepository;
@@ -35,10 +33,6 @@ class BalanceSearchControllerTest extends AbstractIntegrationTest {
     @Autowired
     private BalanceRepository balanceRepository;
 
-    @Autowired
-    BalanceLogRepository balanceLogRepository;
-
-    private CustomerEntity customerEntity;
     private WalletEntity walletEntity;
     private LocalDateTime updateDate;
     private BalanceEntity balanceEntity;
@@ -46,7 +40,7 @@ class BalanceSearchControllerTest extends AbstractIntegrationTest {
     @BeforeEach
     void setUp() {
         updateDate = LocalDate.of(2025, 2, 1).atStartOfDay();
-        customerEntity = customerRepository.save(CustomerBuilder.buildEntity().build());
+        final var customerEntity = customerRepository.save(CustomerBuilder.buildEntity().build());
         walletEntity = walletRepository.save(WalletBuilder.buildEntity(customerEntity).build());
         balanceEntity = balanceRepository.save(BalanceBuilder.buildEntity(walletEntity)
                 .amount(BigDecimal.ONE)

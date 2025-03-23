@@ -30,10 +30,10 @@ public class FinancialMovementEntity {
     @Column(name = "WALLET_EXTERNAL_CODE", nullable = false, unique = true, updatable = false)
     private UUID walletExternalCode;
 
-    @Column(name = "THIRD_CUSTOMER_EXTERNAL_CODE", nullable = false, unique = true, updatable = false)
+    @Column(name = "THIRD_CUSTOMER_EXTERNAL_CODE", unique = true, updatable = false)
     private UUID thirdCustomerExternalCode;
 
-    @Column(name = "THIRD_WALLET_EXTERNAL_CODE", nullable = false, unique = true, updatable = false)
+    @Column(name = "THIRD_WALLET_EXTERNAL_CODE", unique = true, updatable = false)
     private UUID thirdWalletExternalCode;
 
     @Column(name = "AMOUNT", nullable = false, precision = 10, scale = 2, updatable = false)
