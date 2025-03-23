@@ -9,24 +9,24 @@ import com.marciocesar.walletserviceassignment.core.database.repositories.Wallet
 import com.marciocesar.walletserviceassignment.core.dtos.CreateWalletDTO;
 import com.marciocesar.walletserviceassignment.core.dtos.WalletDTO;
 import com.marciocesar.walletserviceassignment.core.exceptions.CustomerNotFoundException;
+import com.marciocesar.walletserviceassignment.core.mapper.WalletEntityMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
-import static com.marciocesar.walletserviceassignment.core.mapper.WalletEntityMapper.WALLET_ENTITY_MAPPER;
 import static java.util.Objects.nonNull;
 
 @Service
+@Transactional
 @AllArgsConstructor
-@Transactional(propagation = Propagation.REQUIRES_NEW)
 public class WalletCreationService {
 
     private WalletRepository walletRepository;
     private BalanceRepository balanceRepository;
     private CustomerRepository customerRepository;
+    private WalletEntityMapper walletEntityMapper;
 
     public WalletDTO create(CreateWalletDTO createWalletDTO) {
 
@@ -34,13 +34,13 @@ public class WalletCreationService {
                 .orElseThrow(CustomerNotFoundException::new);
 
         if (nonNull(customerEntity.getWallet())) {
-            return WALLET_ENTITY_MAPPER.toDTO(customerEntity.getWallet());
+            return walletEntityMapper.toDTO(customerEntity.getWallet());
         }
 
         WalletEntity walletEntity = persistWallet(customerEntity);
         persistBalance(walletEntity);
 
-        return WALLET_ENTITY_MAPPER.toDTO(walletEntity);
+        return walletEntityMapper.toDTO(walletEntity);
     }
 
     private WalletEntity persistWallet(CustomerEntity customerEntity) {

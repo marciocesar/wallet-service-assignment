@@ -11,15 +11,14 @@ import com.marciocesar.walletserviceassignment.core.interfaces.WalletFinancialMo
 import com.marciocesar.walletserviceassignment.core.mapper.BalanceEntityMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 import java.util.function.Function;
 
 @Service
+@Transactional
 @AllArgsConstructor
-@Transactional(propagation = Propagation.REQUIRES_NEW)
 public class TransferenceWalletFinancialMovementService implements WalletFinancialMovement {
 
     private WalletRepository walletRepository;
