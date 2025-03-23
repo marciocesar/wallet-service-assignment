@@ -11,7 +11,7 @@ public final class CustomerBuilder {
         return CustomerEntity.builder()
                 .birthday(LocalDateTime.now())
                 .customerExternalCode(UUID.randomUUID())
-                .email("email@email.com")
-                .name("name");
+                .email(UUID.randomUUID().getMostSignificantBits() + "@test.com")
+                .name(UUID.randomUUID().toString());
     }
 }

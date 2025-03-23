@@ -2,6 +2,7 @@ package com.marciocesar.walletserviceassignment.core.database.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,16 +11,17 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "BALANCE_LOG") // Map to the balance_log table
+@Table(name = "BALANCE_LOG")
 public class BalanceLogEntity {
 
     @EmbeddedId
     private BalanceLogId id;
 
     @Column(name = "REVTYPE", nullable = false)
-    private Integer revisionType; // 0 = Add, 1 = Update, 2 = Delete
+    private Integer revisionType;
 
     @Column(name = "WALLET_ID", nullable = false)
     private Long walletId;
@@ -36,7 +38,7 @@ public class BalanceLogEntity {
     @AllArgsConstructor
     @Embeddable
     public static class BalanceLogId implements Serializable {
-        private Long id;      // Primary key of BalanceEntity
-        private Integer rev;  // Revision ID
+        private Long id;
+        private Integer rev;
     }
 }

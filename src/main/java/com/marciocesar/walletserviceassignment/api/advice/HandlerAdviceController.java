@@ -34,7 +34,7 @@ public class HandlerAdviceController {
     })
     protected ApiErrorResponse notFoundHandler(RuntimeException ex) {
 
-        ApiErrorResponse apiErrorResponse = new ApiErrorResponse(BAD_REQUEST);
+        ApiErrorResponse apiErrorResponse = new ApiErrorResponse(NOT_FOUND);
         apiErrorResponse.setMessage(ex.getMessage());
         return apiErrorResponse;
     }

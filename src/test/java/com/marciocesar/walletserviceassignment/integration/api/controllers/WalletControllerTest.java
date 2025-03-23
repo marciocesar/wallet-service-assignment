@@ -4,13 +4,13 @@ import com.marciocesar.walletserviceassignment.builder.CustomerBuilder;
 import com.marciocesar.walletserviceassignment.core.database.entities.CustomerEntity;
 import com.marciocesar.walletserviceassignment.core.database.repositories.CustomerRepository;
 import com.marciocesar.walletserviceassignment.integration.AbstractIntegrationTest;
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 
-import static org.hamcrest.Matchers.notNullValue;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class WalletControllerTest extends AbstractIntegrationTest {
 
@@ -18,54 +18,43 @@ class WalletControllerTest extends AbstractIntegrationTest {
     private CustomerRepository customerRepository;
 
     @Test
-    void shouldCreateWalletSuccessfully() {
-
+    void shouldCreateWalletSuccessfully() throws Exception {
         CustomerEntity customerEntity = customerRepository.save(CustomerBuilder.buildEntity().build());
 
-        RestAssured.given()
-                .contentType(ContentType.JSON)
-                .body(String.format("""
-                        {
-                            "customerExternalCode": "%s"
-                        }
-                        """, customerEntity.getCustomerExternalCode()))
-                .when()
-                .post("/wallets")
-                .then()
-                .statusCode(HttpStatus.CREATED.value())
-                .body("walletExternalCode", notNullValue())
-                .body("creationDate", notNullValue());
+        mockMvc.perform(post("/wallets")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(String.format("""
+                                {
+                                    "customerExternalCode": "%s"
+                                }
+                                """, customerEntity.getCustomerExternalCode())))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.walletExternalCode").isNotEmpty())
+                .andExpect(jsonPath("$.creationDate").isNotEmpty());
     }
 
     @Test
-    void shouldFailToCreateWalletWhenCustomerNotFound() {
-        RestAssured.given()
-                .contentType(ContentType.JSON)
-                .body("""
-                        {
-                            "customerExternalCode": "6a86f698-de2b-4aee-a3a5-4db2efe0a822"
-                        }
-                        """)
-                .when()
-                .post("/wallets")
-                .then()
-                .statusCode(HttpStatus.NOT_FOUND.value());
+    void shouldFailToCreateWalletWhenCustomerNotFound() throws Exception {
+        mockMvc.perform(post("/wallets")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                    "customerExternalCode": "6a86f698-de2b-4aee-a3a5-4db2efe0a822"
+                                }
+                                """))
+                .andExpect(status().isNotFound());
     }
 
     @Test
-    void shouldFailToCreateWalletWhenRequestBodyInvalid() {
-        RestAssured.given()
-                .contentType(ContentType.JSON)
-                .body("""
-                        {
-                            "customerExternalCodes": "6a86f698-de2b-4aee-a3a5-4db2efe0a822"
-                        }
-                        """)
-                .when()
-                .post("/wallets")
-                .then()
-                .statusCode(HttpStatus.BAD_REQUEST.value())  // Validation error
-                .body("errors", notNullValue());  // Assuming standard error response has validation errors
+    void shouldFailToCreateWalletWhenRequestBodyInvalid() throws Exception {
+        mockMvc.perform(post("/wallets")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                    "customerExternalCodes": "6a86f698-de2b-4aee-a3a5-4db2efe0a822"
+                                }
+                                """))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.errors").isNotEmpty());
     }
-
 }
