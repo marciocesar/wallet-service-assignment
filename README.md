@@ -53,6 +53,8 @@ This will start the application and make it accessible at `http://localhost:8081
 
 ### API Documentation
 
+The file `requests.postman_collection.json` was added to the root of the project with all the requests that can be imported into Postman.
+
 #### WalletController
 
 1. **Create Wallet**
@@ -143,7 +145,7 @@ This will start the application and make it accessible at `http://localhost:8081
 
 3. **Transfer**
     - **Endpoint:** `PUT /wallets/balances/transfer`
-    - **Description:** Transfers an amount from one wallet to another.
+    - **Description:** Transfers an amount from one wallet to another (The two wallets need to be added to the system beforehand).
     - **Request Body:** `TransferBalanceRequest` object containing the transfer details.
     - **Response:** `BalanceResponse` object containing the updated balance details.
     - **Example Request:**

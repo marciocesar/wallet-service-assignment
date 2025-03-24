@@ -1,0 +1,244 @@
+{
+	"info": {
+		"_postman_id": "603f6f3b-7a1f-44b4-a3ba-f912a62ce93a",
+		"name": "automations",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3139205"
+	},
+	"item": [
+		{
+			"name": "Create Wallet",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"customerExternalCode\": \"1bde4228-0c26-4f3d-8172-7735bf45d299\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/wallets",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"wallets"
+					]
+				},
+				"description": "Generated from cURL: curl -X POST http://localhost:5000/execute_command -H \"Content-Type: application/json\" -d \"{\\\"command\\\": \\\"dir\\\"}\"\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Search Balance",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/wallets/:walletExternalCode/balances",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"wallets",
+						":walletExternalCode",
+						"balances"
+					],
+					"variable": [
+						{
+							"key": "walletExternalCode",
+							"value": "889cb550-e68e-4a5d-b73d-e0a5d608124a"
+						}
+					]
+				},
+				"description": "Generated from cURL: curl -X POST http://localhost:5000/execute_command -H \"Content-Type: application/json\" -d \"{\\\"command\\\": \\\"dir\\\"}\"\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Search Balance Log",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/wallets/:walletExternalCode/balances/statement?startDate=2025-01-09&endDate=2025-10-09&size=15",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"wallets",
+						":walletExternalCode",
+						"balances",
+						"statement"
+					],
+					"query": [
+						{
+							"key": "startDate",
+							"value": "2025-01-09"
+						},
+						{
+							"key": "endDate",
+							"value": "2025-10-09"
+						},
+						{
+							"key": "page",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "size",
+							"value": "15"
+						}
+					],
+					"variable": [
+						{
+							"key": "walletExternalCode",
+							"value": "889cb550-e68e-4a5d-b73d-e0a5d608124a"
+						}
+					]
+				},
+				"description": "Generated from cURL: curl -X POST http://localhost:5000/execute_command -H \"Content-Type: application/json\" -d \"{\\\"command\\\": \\\"dir\\\"}\"\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Deposit Balance",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"customerExternalCode\": \"2d3d8d84-02ab-460b-b3d4-1d90c0f109ae\",\r\n    \"walletExternalCode\": \"889cb550-e68e-4a5d-b73d-e0a5d608124a\",\r\n    \"amount\": \"10\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/wallets/balances/deposit",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"wallets",
+						"balances",
+						"deposit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Withdrawal Balance",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n     \"customerExternalCode\": \"2d3d8d84-02ab-460b-b3d4-1d90c0f109ae\",\r\n    \"walletExternalCode\": \"889cb550-e68e-4a5d-b73d-e0a5d608124a\",\r\n    \"amount\": \"4\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/wallets/balances/withdraw",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"wallets",
+						"balances",
+						"withdraw"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Transfer Balance",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"customerExternalCode\": \"1bde4228-0c26-4f3d-8172-7735bf45d299\",\r\n    \"walletExternalCode\": \"889cb550-e68e-4a5d-b73d-e0a5d608124a\",\r\n    \"thirdCustomerExternalCode\": \"d0e79ab8-e8e6-4899-89f0-20c57c08ad99\",\r\n    \"thirdWalletExternalCode\": \"c954618e-ae4f-4f35-8893-9e96ef0b700a\", \r\n    \"amount\": \"6\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/wallets/balances/transfer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"wallets",
+						"balances",
+						"transfer"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
