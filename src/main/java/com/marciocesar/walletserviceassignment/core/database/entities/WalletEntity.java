@@ -16,6 +16,7 @@ import java.util.UUID;
 public class WalletEntity {
 
     @Id
+    @Column(name = "ID", nullable = false, updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -28,7 +29,7 @@ public class WalletEntity {
     private LocalDateTime creationDate;
 
     @OneToOne
-    @JoinColumn(name = "ID_CUSTOMER", nullable = false, unique = true)
+    @JoinColumn(name = "ID_CUSTOMER", updatable = false, nullable = false, unique = true)
     private CustomerEntity customer;
 
     @Setter

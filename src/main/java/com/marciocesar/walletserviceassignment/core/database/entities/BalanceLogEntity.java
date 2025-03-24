@@ -20,18 +20,18 @@ public class BalanceLogEntity {
     @EmbeddedId
     private BalanceLogId id;
 
-    @Column(name = "REVTYPE", nullable = false)
+    @Column(name = "REVTYPE", nullable = false, updatable = false)
     private Integer revisionType;
 
-    @Column(name = "WALLET_ID", nullable = false)
+    @Column(name = "WALLET_ID", nullable = false, updatable = false)
     private Long walletId;
 
     @Getter
-    @Column(name = "AMOUNT", precision = 10, scale = 2)
+    @Column(name = "AMOUNT", scale = 2, updatable = false)
     private BigDecimal amount;
 
     @Getter
-    @Column(name = "UPDATE_DATE", nullable = false)
+    @Column(name = "UPDATE_DATE", nullable = false, updatable = false)
     private LocalDateTime updateDate;
 
     @NoArgsConstructor

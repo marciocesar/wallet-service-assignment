@@ -26,6 +26,7 @@ import java.time.LocalDateTime;
 public class BalanceEntity {
 
     @Id
+    @Column(name = "ID", nullable = false, updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -34,7 +35,7 @@ public class BalanceEntity {
     @JoinColumn(name = "WALLET_ID", nullable = false, unique = true, updatable = false)
     private WalletEntity wallet;
 
-    @Column(name = "AMOUNT", nullable = false, precision = 10, scale = 2)
+    @Column(name = "AMOUNT", nullable = false, scale = 2)
     private BigDecimal amount;
 
     @NotAudited

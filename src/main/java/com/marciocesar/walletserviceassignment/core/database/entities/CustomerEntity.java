@@ -22,6 +22,7 @@ import java.util.UUID;
 public class CustomerEntity {
 
     @Id
+    @Column(name = "ID", nullable = false, updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -35,13 +36,10 @@ public class CustomerEntity {
     @Column(name = "EMAIL", nullable = false, unique = true, length = 150)
     private String email;
 
-    @Column(name = "BIRTHDAY", nullable = false)
-    private LocalDateTime birthday;
-
     @CreationTimestamp
     @Column(name = "CREATION_DATE", nullable = false, updatable = false)
     private LocalDateTime creationDate;
 
-    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "customer", fetch = FetchType.LAZY)
     private WalletEntity wallet;
 }

@@ -9,7 +9,6 @@ public final class CustomerBuilder {
 
     public static CustomerEntity.CustomerEntityBuilder buildEntity() {
         return CustomerEntity.builder()
-                .birthday(LocalDateTime.now())
                 .customerExternalCode(UUID.randomUUID())
                 .email(UUID.randomUUID().getMostSignificantBits() + "@test.com")
                 .name(UUID.randomUUID().toString());

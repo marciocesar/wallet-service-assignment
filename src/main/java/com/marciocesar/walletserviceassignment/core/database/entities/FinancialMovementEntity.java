@@ -21,6 +21,7 @@ import java.util.UUID;
 public class FinancialMovementEntity {
 
     @Id
+    @Column(name = "ID", nullable = false, updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -36,7 +37,7 @@ public class FinancialMovementEntity {
     @Column(name = "THIRD_WALLET_EXTERNAL_CODE", updatable = false)
     private UUID thirdWalletExternalCode;
 
-    @Column(name = "AMOUNT", nullable = false, precision = 10, scale = 2, updatable = false)
+    @Column(name = "AMOUNT", nullable = false,  scale = 2, updatable = false)
     private BigDecimal amount;
 
     @Enumerated(EnumType.STRING)
