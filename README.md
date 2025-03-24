@@ -1,4 +1,4 @@
-### If I had more time, I would like to implement the following improvements and evolutions:
+### Features and improvements that can be made
 
 - Time spent on the project was limited, so I focused on the main requirements.
 
@@ -16,6 +16,20 @@
 | **Java 21**           | The primary programming language used for developing the application.                                         |
 | **Spring Boot 3.1.4** | A framework that simplifies the development of Java applications by providing a comprehensive infrastructure. |
 | **Gradle 8.13**       | The build automation tool used for managing project dependencies and building the application.                |
+
+### Architecture and Design Pattern 
+The base pattern used in the project implementation is "client->domain->persistence":
+- Controller Layer:
+  - Handles HTTP implementation and input validation
+  - Orchestrates REST responses
+- Service Layer:
+  - Contains all core business logic
+  - Ensures the Single Responsibility Principle
+- In the implementation of financial movements: Deposit, Withdraw, and Transfer, the **Strategy Pattern** can be observed:
+  - Ensures that the specific logic of each implementation is separated and reused.
+  - Guarantees extensibility
+  - Ensures the Open/Closed Principle (OCP)
+  - Keeps implementations cohesive and with a single responsibility
 
 ### Running the Application with Docker Compose
 
@@ -39,6 +53,33 @@ This will start the application and make it accessible at `http://localhost:8081
 
 ### API Documentation
 
+#### WalletController
+
+1. **Create Wallet**
+   - **Endpoint:** `POST /wallets`
+   - **Description:** Creates a new wallet.
+   - **Request Body:** `CreateWalletRequest` object containing the wallet creation details.
+   - **Response:** `CreateWalletResponse` object containing the created wallet details.
+   - **List of Valid:** `customerExternalCode` that can be used to generate wallets are
+     ```
+      2d3d8d84-02ab-460b-b3d4-1d90c0f109ae,
+      1bde4228-0c26-4f3d-8172-7735bf45d299,
+      b281ba01-6d6b-4689-9166-406e21fef589,
+      146f8e47-6da2-48f3-a446-4e2d8b30a718,
+      d0e79ab8-e8e6-4899-89f0-20c57c08ad99,
+      4ea1657f-8064-4a68-982e-84d498a48e47,
+      3dc52ad4-6c81-4c4d-b9d4-8f6591bc1ec0,
+      1e8eb393-f17b-4ab0-9840-53651d3ffc4f,
+      28c99b75-3640-4705-b776-81aff634f8bc,
+      48750f12-1bd5-424d-9b34-8ad73a67c928
+     ```
+   - **Example Request:**
+     ```bash
+     curl --location --request POST 'http://localhost:8081/wallets' \
+     --header 'Content-Type: application/json' \
+     --data '{"customerExternalCode": "1bde4228-0c26-4f3d-8172-7735bf45d299"}'
+     ```
+
 #### BalanceSearchController
 
 1. **Search Balance**
@@ -49,7 +90,7 @@ This will start the application and make it accessible at `http://localhost:8081
     - **Response:** `BalanceResponse` object containing the balance details.
     - **Example Request:**
       ```bash
-      curl --location 'http://localhost:8081/wallets/6a86f698-de2b-4aee-a3a5-4db2efe0a822/balances' \
+      curl --location --request GET 'http://localhost:8081/wallets/889cb550-e68e-4a5d-b73d-e0a5d608124a/balances' \
       --header 'Content-Type: application/json' \
       --data ''
       ```
@@ -66,7 +107,7 @@ This will start the application and make it accessible at `http://localhost:8081
     - **Response:** `Page<DailyWalletSummaryResponse>` object containing the balance summary for each day within the period.
     - **Example Request:**
       ```bash
-      curl --location 'http://localhost:8081/wallets/d0e79ab8-e8e6-4899-89f0-20c57c08ad99/balances/statement?startDate=2025-01-09&size=15' \
+      curl --location --request GET 'http://localhost:8081/wallets/889cb550-e68e-4a5d-b73d-e0a5d608124a/balances/statement?startDate=2025-01-09&endDate=2025-10-09&size=15' \
       --header 'Content-Type: application/json' \
       --data ''
       ```
@@ -85,7 +126,7 @@ This will start the application and make it accessible at `http://localhost:8081
       ```bash
       curl --location --request PUT 'http://localhost:8081/wallets/balances/deposit' \
        --header 'Content-Type: application/json' \
-       --data '{"customerExternalCode": "d0e79ab8-e8e6-4899-89f0-20c57c08ad99", "walletExternalCode": "69d71e3c-219f-45ea-9c7a-7052490e8710","amount": "10"}'
+       --data '{"customerExternalCode": "2d3d8d84-02ab-460b-b3d4-1d90c0f109ae", "walletExternalCode": "889cb550-e68e-4a5d-b73d-e0a5d608124a","amount": "10"}'
       ```
 
 2. **Withdraw**
@@ -95,9 +136,9 @@ This will start the application and make it accessible at `http://localhost:8081
     - **Response:** `BalanceResponse` object containing the updated balance details.
     - **Example Request:**
       ```bash
-       curl --location --request PUT 'http://localhost:8081/wallets/balances/withdraw' \ 
+       curl --location --request PUT 'http://localhost:8081/wallets/balances/withdraw' \
       --header 'Content-Type: application/json' \
-      --data '{"customerExternalCode": "d0e79ab8-e8e6-4899-89f0-20c57c08ad99","walletExternalCode": "69d71e3c-219f-45ea-9c7a-7052490e8710","amount": "4"}'
+      --data '{"customerExternalCode": "2d3d8d84-02ab-460b-b3d4-1d90c0f109ae","walletExternalCode": "889cb550-e68e-4a5d-b73d-e0a5d608124a","amount": "4"}'
       ```
 
 3. **Transfer**
@@ -107,19 +148,7 @@ This will start the application and make it accessible at `http://localhost:8081
     - **Response:** `BalanceResponse` object containing the updated balance details.
     - **Example Request:**
       ```bash
-      curl -X PUT "http://localhost:8081/wallets/balances/transfer" -H "Content-Type: application/json" -d '{"amount": 30.0, "sourceWalletExternalCode": "{sourceWalletExternalCode}", "targetWalletExternalCode": "{targetWalletExternalCode}"}'
-      ```
-
-#### WalletController
-
-1. **Create Wallet**
-    - **Endpoint:** `POST /wallets`
-    - **Description:** Creates a new wallet.
-    - **Request Body:** `CreateWalletRequest` object containing the wallet creation details.
-    - **Response:** `CreateWalletResponse` object containing the created wallet details.
-    - **Example Request:**
-      ```bash
       curl --location --request PUT 'http://localhost:8081/wallets/balances/transfer' \
       --header 'Content-Type: application/json' \
-      --data '{"customerExternalCode": "1bde4228-0c26-4f3d-8172-7735bf45d299","walletExternalCode": "c7a633b5-fe08-4d4a-8508-5878ba030bba","thirdCustomerExternalCode": "d0e79ab8-e8e6-4899-89f0-20c57c08ad99","thirdWalletExternalCode": "c954618e-ae4f-4f35-8893-9e96ef0b700a","amount": "6"}'
+      --data '{"customerExternalCode": "1bde4228-0c26-4f3d-8172-7735bf45d299","walletExternalCode": "889cb550-e68e-4a5d-b73d-e0a5d608124a","thirdCustomerExternalCode": "d0e79ab8-e8e6-4899-89f0-20c57c08ad99","thirdWalletExternalCode": "c954618e-ae4f-4f35-8893-9e96ef0b700a","amount": "6"}'
       ```
